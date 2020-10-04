@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
 struct Truba
 {
 	float l; //длина 
@@ -35,41 +36,40 @@ KS CreatNewKS()
 	KS r;
 	cout << "Считайте данные для компрессарных станций: " << endl;
 	r.id = "1";
-	cout << "Введите имя трубы" ;
+	cout << "Введите имя трубы" <<endl;
 	cin >> r.name;
-	cout << "Введите количество цехов";
+	cout << "Введите количество цехов" << endl;
 	cin >> r.cahi;
-	cout << "Введите количество цехов в работе";
+	cout << "Введите количество цехов в работе" << endl;
 	cin >> r.ciw;
-	cout << "Введите эффективность трубы";
+	cout << "Введите эффективность трубы" << endl;
 	cin >> r.proiz;
 	return r;
 
 }
 
-Truba PrintTruba()
+void PrintTruba(Truba p)
 {
-	Truba t;
-	cout << "\n Интендификатор трубы id = " << t.id;
-	cout << "Длинна трубы = " << t.l;
-	cout << "Диаметр трубы = " << t.l;
-	return t;
+	cout << "\n Интендификатор трубы id = " << p.id;
+	cout << "Длинна трубы = " << p.l;
+	cout << "Диаметр трубы = " << p.l;
+
 }
 
-KS PrintKS()
+void PrintKS(KS c)
 {
-	KS r;
-	cout << "\n Интендификатор кс id = " << r.id;
-	cout << "Имя трубы = " << r.name;
-	cout << "Количество цехов = " << r.cahi;
-	cout<< "Количество рабочих цехов = " << r.ciw;
-	return r;
+	cout << "\n Интендификатор кс id = " << c.id;
+	cout << "Имя трубы = " << c.name;
+	cout << "Количество цехов = " << c.cahi;
+	cout<< "Количество рабочих цехов = " << c.ciw;
 }
+
 int main() 
 {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");
 	CreatNewTruba();
 	CreatNewKS();
-	PrintTruba();
-	PrintKS();
+	PrintTruba(CreatNewTruba());
+	PrintKS(CreatNewKS());
+
 }
