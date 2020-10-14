@@ -1,6 +1,7 @@
 ﻿
 #include <iostream>
 #include <string>
+#include < fstream >
 using namespace std;
 
 struct Truba
@@ -15,7 +16,7 @@ struct KS
 	string id;
 	string name;
 	int cahi; // кол-во цехов
-	int ciw;// цехов в работе
+	int inwork;// цехов в работе
 	float proiz;// эффективность
 };
 
@@ -41,7 +42,7 @@ KS CreatNewKS()
 	cout << "Введите количество цехов" << endl;
 	cin >> r.cahi;
 	cout << "Введите количество цехов в работе" << endl;
-	cin >> r.ciw;
+	cin >> r.inwork;
 	cout << "Введите эффективность трубы" << endl;
 	cin >> r.proiz;
 	return r;
@@ -61,7 +62,34 @@ void PrintKS(KS c)
 	cout << "\n Интендификатор кс id = " << c.id;
 	cout << "Имя трубы = " << c.name;
 	cout << "Количество цехов = " << c.cahi;
-	cout<< "Количество рабочих цехов = " << c.ciw;
+	cout<< "Количество рабочих цехов = " << c.inwork;
+}
+
+void outputTruba(Truba p)
+{
+	ofstream fout;
+	fout.open("output.txt");
+	if (fout.is_open())
+	{
+		cout << "\n Интендификатор трубы id = " << p.id;
+		cout << "Длинна трубы = " << p.l;
+		cout << "Диаметр трубы = " << p.l;
+	}
+
+}
+
+void outputKS(KS c)
+{
+	ofstream fout;
+	fout.open("output.txt");
+	if (fout.is_open())
+	{
+		cout << "\n Интендификатор кс id = " << c.id;
+		cout << "Имя трубы = " << c.name;
+		cout << "Количество цехов = " << c.cahi;
+		cout << "Количество рабочих цехов = " << c.inwork;
+	}
+
 }
 
 int main() 
