@@ -1,138 +1,103 @@
-﻿#include <iostream>
+﻿
+#include <iostream>
 #include <string>
 #include < fstream >
 using namespace std;
 
 struct Truba
 {
-	float L = 0.0; 
-	string id = "1";
-	int D = 0;
-	bool repair=false;
+	float l; //длина 
+	string id;//интендификатор 
+	int dim;// диаметр
+	bool pz;// в ремонте
 };
 struct KS
 {
-	string id = "1";
-	string name = "";
-	int shop = 0; 
-	int inwork = 0;
-	int KPD = 1;
+	string id;
+	string name;
+	int cahi; // кол-во цехов
+	int inwork;// цехов в работе
+	float proiz;// эффективность
 };
 
 Truba CreatNewTruba()
 {	
-	Truba new_Truba;
-	cout << "\n Cчитайте данные для трубы: " << endl;
-	new_Truba.id = "0";
-	new_Truba.repair = false;
+	Truba t;
+	cout << "Cчитайте данные для трубы: " << endl;
+	t.id = "0";
+	t.pz = false;
 	cout << "\n введите длинну трубы (в м): ";
-	cin >> new_Truba.L;
+	cin >> t.l;
 	cout << "\n введите диамтр трубы (в мм): ";
-	cin >> new_Truba.D;
-	return new_Truba;
+	cin >> t.dim;
+	return t;
 }
 KS CreatNewKS() 
 {
-	KS new_KS;
-	cout << "\n Считайте данные для компрессарных станций: " << endl;
-	new_KS.id = "1";
-	cout << "\n Введите имя КС: ";
-	cin >> new_KS.name;
-	cout << "\n Введите количество цехов: ";
-	cin >> new_KS.shop;
-	cout << "\n Введите количество цехов в работе: " ;
-	cin >> new_KS.inwork;
-	cout << "\n Введите эффективность трубы  (1-10): ";
-	cin >> new_KS.KPD;
-	return new_KS;
+	KS r;
+	cout << "Считайте данные для компрессарных станций: " << endl;
+	r.id = "1";
+	cout << "Введите имя трубы" <<endl;
+	cin >> r.name;
+	cout << "Введите количество цехов" << endl;
+	cin >> r.cahi;
+	cout << "Введите количество цехов в работе" << endl;
+	cin >> r.inwork;
+	cout << "Введите эффективность трубы" << endl;
+	cin >> r.proiz;
+	return r;
 
 }
 
-void PrintTruba(Truba t)
+void PrintTruba(Truba p)
 {
-	cout << "\nИнтендификатор трубы id = " << t.id << endl;
-	cout << "Длинна трубы = " << t.L << endl;
-	cout << "Диаметр трубы = " << t.D << endl;
-	cout << (t.repair ? "Труба в ремонте" : "Труба не в ремонте") << endl;
+	cout << "\n Интендификатор трубы id = " << p.id;
+	cout << "Длинна трубы = " << p.l;
+	cout << "Диаметр трубы = " << p.l;
 
 }
 
 void PrintKS(KS c)
 {
-	cout << "\nИнтендификатор кс id = " << c.id << endl;
-	cout << "Имя трубы = " << c.name << endl;
-	cout << "Количество цехов = " << c.shop << endl;
-	cout << "Количество рабочих цехов = " << c.inwork << endl;
+	cout << "\n Интендификатор кс id = " << c.id;
+	cout << "Имя трубы = " << c.name;
+	cout << "Количество цехов = " << c.cahi;
+	cout<< "Количество рабочих цехов = " << c.inwork;
 }
 
-void SaveFileTruba(Truba t)
+void outputTruba(Truba p)
 {
 	ofstream fout;
-	fout.open("output.txt", ios::out);
+	fout.open("output.txt");
 	if (fout.is_open())
 	{
-		fout << t.D << endl << t.id << endl << t.L << endl << t.repair << endl;
-		fout.close();
+		cout << "\n Интендификатор трубы id = " << p.id;
+		cout << "Длинна трубы = " << p.l;
+		cout << "Диаметр трубы = " << p.l;
 	}
 
 }
 
-void SaveFileKS(KS c)
+void outputKS(KS c)
 {
 	ofstream fout;
-	fout.open("output.txt", ios::app);
+	fout.open("output.txt");
 	if (fout.is_open())
 	{
-		fout << c.id << endl << c.inwork << endl << c.KPD << endl << c.name << endl<<c.shop ;
-		fout.close();
+		cout << "\n Интендификатор кс id = " << c.id;
+		cout << "Имя трубы = " << c.name;
+		cout << "Количество цехов = " << c.cahi;
+		cout << "Количество рабочих цехов = " << c.inwork;
 	}
 
-}
-
-Truba ReadFileTruba()
-{
-	ifstream fin;
-	fin.open("input.txt", ios::in);
-	Truba t;
-	if (fin.is_open())
-	{
-		fin >> t.D;
-		fin >> t.id;
-		fin >> t.L;
-		fin >> t.repair;
-		fin.close();
-		return t;
-	}
-}
-
-KS ReadFileKS()
-{
-	ifstream fin;
-	fin.open("input.txt", ios::in);
-	KS c;
-	if (fin.is_open())
-	{
-		fin >> c.id;
-		fin >> c.inwork;
-		fin >> c.KPD;
-		fin >> c.name;
-		fin >> c.shop;
-		fin.close();
-		return c;
-	}
 }
 
 int main() 
 {
 	setlocale(LC_ALL, "Russian");
-	Truba t;
-	KS c;
-	t=CreatNewTruba();
-	c=CreatNewKS();
-	PrintTruba(t);
-	PrintKS(c);
-	SaveFileTruba(t);
-	SaveFileKS(c);
-	t=ReadFileTruba();
-	PrintTruba(t);
+	CreatNewTruba();
+	CreatNewKS();
+	PrintTruba(CreatNewTruba());
+	PrintKS(CreatNewKS());
+
 }
