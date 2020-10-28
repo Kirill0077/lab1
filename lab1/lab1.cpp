@@ -54,7 +54,7 @@ void PrintTruba(Truba t)
 	cout << "Длинна трубы = " << t.L << endl;
 	cout << "Диаметр трубы = " << t.D << endl;
 	cout << (t.repair ? "Труба в ремонте" : "Труба не в ремонте") << endl;
-
+	 
 }
 
 void PrintKS(KS c)
@@ -121,18 +121,58 @@ KS ReadFileKS()
 		return c;
 	}
 }
+void Menu()
+{
+	cout << "1. Считать данные из файла" << endl;
+	cout << "2. Создать Трубу" << endl;
+	cout << "3. Создать компрессарную станцию" << endl;
+	cout << "4. Просмотр всех объектов" << endl;
+	cout << "5. Редактировать трубу" << endl;
+	cout << "6. Запуски и остановка цеха" << endl;
+	cout << "7. Сохранить все данные в файл" << endl;
+	cout << "0. Выход" << endl;
+}
 
 int main() 
 {
 	setlocale(LC_ALL, "Russian");
 	Truba t;
 	KS c;
-	t=CreatNewTruba();
-	c=CreatNewKS();
-	PrintTruba(t);
-	PrintKS(c);
-	SaveFileTruba(t);
-	SaveFileKS(c);
+	int i;
+	while (true) 
+	{
+		Menu();
+		cin >> i;
+		switch (i)
+		{
+		case 1:
+			break;
+		case 2:
+			t = CreatNewTruba();
+			break;
+		case 3:
+			c = CreatNewKS();
+			break;
+		case 4:
+			PrintTruba(t);
+			PrintKS(c);
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			SaveFileTruba(t);
+			SaveFileKS(c);
+			break;
+		case 0:
+			return 0;
+			break;
+		default:
+			cout << "Возникла ошибка" << endl;
+			break;
+		}
+	}
 	t=ReadFileTruba();
 	PrintTruba(t);
 }
