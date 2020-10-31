@@ -41,9 +41,9 @@ Truba CreatNewTruba()
 	cout << "\nCчитайте данные для трубы: " << endl;
 	newTruba.id = "0";
 	newTruba.repair = false;
-	cout << "\nВведите длинну трубы (м) " << endl;
+	cout << "Введите длинну трубы (м) " << endl;
 	newTruba.Length = GetCorrectNumber(0.0,99999999999999999.0);
-	cout << "\nВвидите диаметр трубы (мм) " << endl;
+	cout << "Ввидите диаметр трубы (мм) " << endl;
 	newTruba.Diametr = GetCorrectNumber(0, 999999999);
 	return newTruba;
 }
@@ -52,17 +52,17 @@ KS CreatNewKS()
 	KS newKS;
 	cout << "\nСчитайте данные для компрессарных станций: " << endl;
 	newKS.id = "1";
-	cout << "\nВведите имя КС: ";
+	cout << "Введите имя КС: ";
 	cin.get();
 	getline(cin, newKS.name);
-	cout << "\nВведите количество цехов ";
+	cout << "Введите количество цехов " << endl;
 	newKS.shop = GetCorrectNumber(0,999999999);
 	do
 	{
-	cout << "\nВведите количество цехов в работе ";
-	newKS.inwork = GetCorrectNumber(0, 999999999);
+		cout << "Введите количество цехов в работе " << endl;
+		newKS.inwork = GetCorrectNumber(0, 999999999);
 	} while (newKS.shop< newKS.inwork); // проверка количество рбочих заводов между общим количеством заводов 
-	cout << "\nВведите эффективность трубы (1-10) " << endl;
+	cout << "Введите эффективность трубы (1-10) " << endl;
 	newKS.perfomance=GetCorrectNumber(1,10);
 	return newKS;
 
