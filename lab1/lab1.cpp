@@ -5,79 +5,64 @@ using namespace std;
 
 struct Truba
 {
-	float L = 0.0; 
-	string id = "1";
-	int D = 0;
-	bool repair=false;
+	double Length = 0.0; //длина
+	string id = "1"; // id
+	unsigned int Diametr = 0; //диаметр
+	bool repair=false; // статус в ремонте
 };
 struct KS
 {
-	string id = "1";
-	string name = "";
-	unsigned int shop = 0; 
-	unsigned int inwork = 0;
-	unsigned int perfomance = 1;
+	string id = "1"; // id
+	string name = ""; // имя
+	unsigned int shop = 0; // цехи
+	unsigned int inwork = 0; // цехи в работе
+	unsigned int perfomance = 1; // эффективность
 };
-int GetCorrectNumber(int min, int max)
+
+template <typename T>
+T GetCorrectNumber(T min, T max)
 {
-	int x;
-	do
+	T x;
+	cout << "Выберите пункт от " << min << " до " << max << ": ";
+	cin >> x;
+	while (cin.fail()|| x<min || x>max)
 	{
 		cin.clear();
 		cin.ignore(1000000, '\n');
 		cout << "Выберите пункт от "<<min <<" до "<<max<<": ";
-		cin >> x;
-	} while (cin.fail() || x<min || x>max); 
+ 		cin >> x;
+	} 
 	return x;
 }
-template <typename T>
-bool CheckPositiveValue(T x)
-{
-	return x > 0 ? true : false;
-}
+
 Truba CreatNewTruba()
 {	
 	Truba newTruba;
-	cout << "\n Cчитайте данные для трубы: " << endl;
+	cout << "\nCчитайте данные для трубы: " << endl;
 	newTruba.id = "0";
 	newTruba.repair = false;
-	do
-	{
-		cin.clear();
-		cin.ignore(1000000, '\n');
-		cout << "\n введите длинну трубы (в м): ";
-		cin >> newTruba.L;
-	} while (cin.fail() || !CheckPositiveValue(newTruba.L) );
-	do
-	{
-		cin.clear();
-		cin.ignore(1000000, '\n');
-		cout << "\n введите диамтр трубы (в мм): ";
-		cin >> newTruba.D;
-	} while (cin.fail() || !CheckPositiveValue(newTruba.D));
+	cout << "\nВведите длинну трубы (м) " << endl;
+	newTruba.Length = GetCorrectNumber(0.0,99999999999999999.0);
+	cout << "\nВвидите диаметр трубы (мм) " << endl;
+	newTruba.Diametr = GetCorrectNumber(0, 999999999);
 	return newTruba;
 }
 KS CreatNewKS() 
 {
 	KS newKS;
-	cout << "\n Считайте данные для компрессарных станций: " << endl;
+	cout << "\nСчитайте данные для компрессарных станций: " << endl;
 	newKS.id = "1";
-	cout << "\n Введите имя КС: ";
+	cout << "\nВведите имя КС: ";
 	cin.get();
 	getline(cin, newKS.name);
+	cout << "\nВведите количество цехов ";
+	newKS.shop = GetCorrectNumber(0,999999999);
 	do
 	{
-		cin.clear();
-		cin.ignore(1000000, '\n');
-		cout << "\n Введите количество цехов: ";
-		cin >> newKS.shop;
-	} while (cin.fail());
-	do
-	{
-		cout << "\n Введите количество цехов в работе: ";
-		cin >> newKS.inwork;
-	} while (cin.fail() || newKS.inwork>newKS.shop);
-	cout << "\n Введите эффективность трубы. " << endl;
+	cout << "\nВведите количество цехов в работе ";
+	newKS.inwork = GetCorrectNumber(0, 999999999);
+	} while (newKS.shop< newKS.inwork); // проверка количество рбочих заводов между общим количеством заводов 
+	cout << "\nВведите эффективность трубы (1-10) " << endl;
 	newKS.perfomance=GetCorrectNumber(1,10);
 	return newKS;
 
@@ -86,8 +71,8 @@ KS CreatNewKS()
 void PrintTruba(Truba t)
 {
 	cout << "\nИнтендификатор трубы id = " << t.id << endl;
-	cout << "Длинна трубы = " << t.L << endl;
-	cout << "Диаметр трубы = " << t.D << endl;
+	cout << "Длинна трубы = " << t.Length << endl;
+	cout << "Диаметр трубы = " << t.Diametr << endl;
 	cout << (t.repair ? "Труба в ремонте" : "Труба не в ремонте") << endl;
 	 
 }
@@ -106,7 +91,7 @@ void SaveFileTruba(Truba t)
 	fout.open("file.txt", ios::out);
 	if (fout.is_open())
 	{
-		fout << t.D << endl << t.id << endl << t.L << endl << t.repair << endl;
+		fout << t.Diametr << endl << t.id << endl << t.Length << endl << t.repair << endl;
 		fout.close();
 	}
 
@@ -127,9 +112,9 @@ void SaveFileKS(KS c)
 Truba ReadFileTruba(ifstream& fin)
 {
 	Truba t;
-	fin >> t.D;
+	fin >> t.Diametr;
 	fin >> t.id;
-	fin >> t.L;
+	fin >> t.Length;
 	fin >> t.repair;
 	return t;
 }
@@ -160,12 +145,15 @@ void ChangeStatus(bool& status)
 {
 	status = !status;
 }
+
 void StopWork(KS& c) {
 	c.inwork--;
 }
+
 void StartWork(KS& c) {
 	c.inwork++;
 }
+
 int main() 
 {
 	setlocale(LC_ALL, "Russian");
