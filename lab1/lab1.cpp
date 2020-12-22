@@ -52,7 +52,7 @@ bool check_pointBywork(const Class_KS& s, double param)
 	return (abs(point_inwork - param / 100.0) < 0.0001);
 }
 template<class T>
-void DeletePipeCS(unordered_map <int, T>& m)
+void Delete_Truba_and_KS(unordered_map <int, T>& m)
 {
 	unsigned int id = GetCorrectNumber("Введите ID: ", 0, 10000);
 	int n = 0;
@@ -67,7 +67,7 @@ void EditingTruba(unordered_map<int, Class_Truba>& m, vector<int> EditedPipes)
 
 	int answer;
 	while (true) {
-		Menu2("All found", "Slice");
+		Menu2("все найденные", "указать, какие именно");
 		answer = GetCorrectNumber("Your choice (0-2): ", 0, 2);
 		if (answer == 1) {
 			for (auto& i : EditedPipes) {
@@ -95,19 +95,19 @@ void EditingTruba(unordered_map<int, Class_Truba>& m, vector<int> EditedPipes)
 
 void Menu()
 {
-	cout << "-------------------\n"
-		<< "1. Создание трубы или КС" << "\n"
-		<< "2. Вывод всех объектов" << "\n"
-		<< "3. Редактирование трубы или КС" << "\n"
-		<< "4. Удаление трубы или КС" << "\n"
+	cout << "+++++++++++++++++++++++++++++++++++++++++++\n"
+		<< "1. Создать трубы и КС" << "\n"
+		<< "2. Удалить трубы и КС" << "\n"
+		<< "3. Редактировать трубы и КС" << "\n"
+	    << "4. Показ всех объектов" << "\n"
 		<< "5. Поиск труб по заданному фильтру" << "\n"
 		<< "6. Поиск КС по заданному фильтру" << "\n"
 		<< "7. Пакетное редактирование труб" << "\n"
-		<< "8. Сохранение в файл" << "\n"
-		<< "9. Загрузка из файла" << "\n"
-		<< "10. Очистить консоль" << "\n"
+		<< "8. Сохранить в файл" << "\n"
+		<< "9. Загрузить из файла" << "\n"
+		<< "10. Чистка консоли" << "\n"
 		<< "0. Выход" << "\n"
-		<< "-------------------" << endl;
+		<< "+++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
 
 
@@ -118,7 +118,7 @@ int main()
 	setlocale(LC_ALL, "Russian");
 	unordered_map <int, Class_Truba> Truba;
 	unordered_map <int, Class_KS> KS;
-	vector <int> EditedPipes;
+	vector <int> EditedTrubs;
 	while (true)
 	{
 		Menu();
@@ -157,22 +157,32 @@ int main()
 		}
 		case 2:
 		{
-			if (Truba.size() != 0) {
-				for (auto& t : Truba)
-				{
-					cout << t.second << endl;
+			while (true) {
+				Menu2("Труба", "КС");
+				int choice1 = GetCorrectNumber("Выберите от 0 до 2: ", 0, 2);
+				if (choice1 == 1) {
+					if (Truba.size() != 0) {
+						Delete_Truba_and_KS(Truba);
+					}
+					else {
+						cout << "Вы еще не создавали трубы" << endl;
+					}
 				}
-			}
-			else {
-				cout << "Вы еще не создавали трубы" << endl;
-			}
-			if (KS.size() != 0) {
-				for (auto& s : KS) {
-					cout << s.second << endl;
+				else if (choice1 == 2) {
+					if (KS.size() != 0) {
+						Delete_Truba_and_KS(KS);
+					}
+					else {
+						cout << "Вы еще не создавали КС" << endl;
+					}
 				}
-			}
-			else {
-				cout << "Вы еще не создавали КС" << endl;
+				else if (choice1 == 0) {
+					cout << '\n';
+					break;
+				}
+				else {
+					cout << "Ошибка: выберите от 0 до 2" << endl;
+				}
 			}
 			break;
 		}
@@ -210,33 +220,24 @@ int main()
 			}
 			break;
 		}
-		case 4: {
-			while (true) {
-				Menu2("Труба", "КС");
-				int choice1 = GetCorrectNumber("Выберите от 0 до 2: ", 0, 2);
-				if (choice1 == 1) {
-					if (Truba.size() != 0) {
-						DeletePipeCS(Truba);
-					}
-					else {
-						cout << "Вы еще не создавали трубы" << endl;
-					}
+		case 4: 
+		{
+			if (Truba.size() != 0) {
+				for (auto& t : Truba)
+				{
+					cout << t.second << endl;
 				}
-				else if (choice1 == 2) {
-					if (KS.size() != 0) {
-						DeletePipeCS(KS);
-					}
-					else {
-						cout << "Вы еще не создавали КС" << endl;
-					}
+			}
+			else {
+				cout << "Вы еще не создавали трубы" << endl;
+			}
+			if (KS.size() != 0) {
+				for (auto& s : KS) {
+					cout << s.second << endl;
 				}
-				else if (choice1 == 0) {
-					cout << '\n';
-					break;
-				}
-				else {
-					cout << "Ошибка: выберите от 0 до 2" << endl;
-				}
+			}
+			else {
+				cout << "Вы еще не создавали КС" << endl;
 			}
 			break;
 		}
@@ -245,19 +246,19 @@ int main()
 				Menu2("Поиск по ID", "Поиск по статусу в ремонте ");
 				int choice5 = GetCorrectNumber("Выберите от 0 до 2: ", 0, 2);
 				if (choice5 == 1) {
-					unsigned int id_to_find;
-					id_to_find = GetCorrectNumber("Введите ID: ", 0u, 10000u);
-					for (int i : FindObjectsByFilter(Truba, check_id, id_to_find)) {
+					unsigned int Id_Find;
+					Id_Find = GetCorrectNumber("Введите ID: ", 0u, 10000u);
+					for (int i : FindObjectsByFilter(Truba, check_id, Id_Find)) {
 						cout << Truba[i] << endl;
-						EditedPipes.push_back(i);
+						EditedTrubs.push_back(i);
 					}
 				}
 				else if (choice5 == 2) {
-					bool is_broken_status_to_find;
-					is_broken_status_to_find = GetCorrectNumber("В ремонте? [да-1/нет-0]: ", false, true);
-					for (int i : FindObjectsByFilter(Truba, check_repair, is_broken_status_to_find)) {
+					bool ChangeStatus_find;
+					ChangeStatus_find = GetCorrectNumber("В ремонте? [да-1/нет-0]: ", false, true);
+					for (int i : FindObjectsByFilter(Truba, check_repair, ChangeStatus_find)) {
 						cout << Truba[i] << endl;
-						EditedPipes.push_back(i);
+						EditedTrubs.push_back(i);
 					}
 				}
 				else if (choice5 == 0) {
@@ -276,18 +277,18 @@ int main()
 				Menu2("Поиск по имени", "Поиск по проценту незадействованных цехов");
 				int choice6 = GetCorrectNumber("Выберите от 0 до 2: ", 0, 2);
 				if (choice6 == 1) {
-					string name_to_find;
+					string Name_Find;
 					cout << "Введите имя КС: ";
 					cin.get();
-					getline(cin, name_to_find);
-					for (int i : FindObjectsByFilter(KS, check_name, name_to_find)) {
+					getline(cin, Name_Find);
+					for (int i : FindObjectsByFilter(KS, check_name, Name_Find)) {
 						cout << KS[i] << endl;
 					}
 				}
 				else if (choice6 == 2) {
-					double percentage_to_find;
-					percentage_to_find = GetCorrectNumber("Введите значение в процентах (0-100%): ", 0.0, 100.0);
-					for (int i : FindObjectsByFilter(KS, check_pointBywork, percentage_to_find)) {
+					double Point_Find;
+					Point_Find = GetCorrectNumber("Введите значение в процентах (0-100%): ", 0.0, 100.0);
+					for (int i : FindObjectsByFilter(KS, check_pointBywork, Point_Find)) {
 						cout << KS[i] << endl;
 					}
 				}
@@ -302,7 +303,7 @@ int main()
 		}
 		case 7: {
 			if (Truba.size() != 0) {
-				EditingTruba(Truba, EditedPipes);
+				EditingTruba(Truba, EditedTrubs);
 			}
 			else {
 				cout << "Вы еще не создавали трубы" << endl;
@@ -337,16 +338,16 @@ int main()
 			getline(cin, filename);
 			fin.open(filename, ios::in);
 			if (fin.is_open()) {
-				int number_of_pipes;
-				int number_of_CSs;
-				fin >> number_of_pipes;
-				fin >> number_of_CSs;
-				while (number_of_pipes--) {
+				int Numb_Truba;
+				int Numd_KS;
+				fin >> Numb_Truba;
+				fin >> Numd_KS;
+				while (Numb_Truba--) {
 					Class_Truba t;
 					fin >> t;
 					Truba.emplace(t.getid(), t);
 				}
-				while (number_of_CSs--) {
+				while (Numd_KS--) {
 					Class_KS s;
 					fin >> s;
 					KS.emplace(s.getid(), s);
