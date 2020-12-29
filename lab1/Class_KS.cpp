@@ -44,35 +44,33 @@ void Class_KS::edit_KS()
 
 istream& operator>>(istream& in, Class_KS& s)
 {
-	cout << "Введите имя КС " << endl;
+	cout << "Введите имя КС ";
 	cin.get();
 	getline(cin, s.name);
-	s.shop = GetCorrectNumber("Введите количесвто цехов ", 0, 100);
+	s.shop = GetCorrectNumber("Введите количесвто цехов: ", 0, 100);
 	s.inwork = GetCorrectNumber("Введите количество рабочих цехов: ", 0, s.shop);
-	s.perfomance = GetCorrectNumber("Введите эффективность", 1, 10);
+	s.perfomance = GetCorrectNumber("Введите эффективность: ", 1, 10);
 	return in;
 }
 
 ostream& operator<<(ostream& out, const Class_KS& s)
 {
-	out << "\nИнтедификатор КС" << s.id << "\n"
-		<< "Имя КС" << s.name << "\n"
-		<< "Количество цехов " << s.shop << "\n"
-		<< "Количесвто цехов в работе " << s.inwork << "\n"
-		<< "Эфективность КС " << s.perfomance << endl;
+	out << "\nИнтедификатор КС: " << s.id << "\n"
+		<< "Имя КС: " << s.name << "\n"
+		<< "Количество цехов: " << s.shop << "\n"
+		<< "Количесвто цехов в работе: " << s.inwork << "\n"
+		<< "Эфективность КС: " << s.perfomance << endl;
 	return out;
 }
 
 ifstream& operator>>(ifstream& fin, Class_KS& s)
 {
-	fin >> s.id >> s.name >> s.shop
-		>> s.inwork >> s.perfomance;
+	fin >> s.id >> s.name >> s.shop>> s.inwork >> s.perfomance;
 	return fin;
 }
 
 ofstream& operator<<(ofstream& fout, const Class_KS& s)
 {
-	fout << s.id << endl << s.name << endl << s.shop
-		<< endl << s.inwork << endl << s.perfomance << endl;
+	fout << s.id << endl << s.name << endl << s.shop<< endl << s.inwork << endl << s.perfomance << endl;
 	return fout;
 }

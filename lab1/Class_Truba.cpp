@@ -7,7 +7,7 @@ int Class_Truba::MaxID = 0;
 
 Class_Truba::Class_Truba()
 {
-	id = MaxID++;
+	id = ++MaxID;
 	Length = 0;
 	Diameter = 0;
 	repair = false;
@@ -44,7 +44,7 @@ istream& operator >> (istream& in, Class_Truba& t)
 
 ostream& operator << (ostream& out, const Class_Truba& t)
 {
-	out << "\nИнтендификатор трубы " << t.id << "\n"
+	out << "\nИнтендификатор трубы: " << t.id << "\n"
 		<< "Длина трубы: " << t.Length << "\n"
 		<< "Диаметр трубы: " << t.Diameter << "\n"
 		<< "Статус трубы " << t.repair
@@ -60,7 +60,6 @@ ifstream& operator>>(ifstream& fin, Class_Truba& t)
 
 ofstream& operator<<(ofstream& fout, const Class_Truba& t)
 {
-	fout << t.id << endl << t.Length << endl
-		<< t.Diameter << endl << t.repair << endl;
+	fout << t.id << endl << t.Length << endl<< t.Diameter << endl << t.repair << endl;
 	return fout;
 }
