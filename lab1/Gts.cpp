@@ -10,7 +10,7 @@ void Gts::Add_KS(const unordered_map<int, Class_KS>& map, int id)
     
 	outp.insert(map.find(id)->first);
 	index_KS.insert({ id, outp.size() - 1 });
-	cout << "KS added ID: " << index_KS.find(id)->first << " Index: " << index_KS.find(id)->second << endl;
+	cout << "KS добавила ID: " << index_KS.find(id)->first << " Index: " << index_KS.find(id)->second << endl;
 	is_change = true;
 
 }
@@ -19,20 +19,20 @@ void Gts::Add_Truba(const unordered_map<int, Class_Truba>& map, int id)
 {
 	intp.insert(map.find(id)->first);
 	index_Truba.insert({ id, intp.size() - 1 });
-	cout << "Truba added ID: " << index_Truba.find(id)->first << " Index: " << index_Truba.find(id)->second << endl;
+	cout << "Truba добавила ID: " << index_Truba.find(id)->first << " Index: " << index_Truba.find(id)->second << endl;
 	is_change = true;
 }
 
 
 void Gts::Connect_outp( unordered_map<int, Class_Truba>& Map_Truba, unordered_map<int, Class_KS>& Map_KS)
 {
-	cout << "Enter KS: " << endl;
-	int Start_KS = GetCorrectNumber("Enter start KS", 0, Class_KS::getMaxID());
-	int id_Truba = GetCorrectNumber("Enter Truba: ", 0, Class_Truba::getMaxID());
-	int Finish_KS = GetCorrectNumber("Enter final KS: ", 0, Class_KS::getMaxID());
+	cout << "Введите KS: " << endl;
+	int Start_KS = GetCorrectNumber("Введите начало трубы", 0, Class_KS::getMaxID());
+	int id_Truba = GetCorrectNumber("Введите Id трубы: ", 0, Class_Truba::getMaxID());
+	int Finish_KS = GetCorrectNumber("Введите конец трубы: ", 0, Class_KS::getMaxID());
 	Map_Truba.find(id_Truba)->second.setStart(Start_KS);
 	Map_Truba.find(id_Truba)->second.setFinish(Finish_KS);
-	cout << "KS: " << Start_KS << " was connected with KS: " << Finish_KS << "by Truba with id: " << id_Truba << endl;
+	cout << "KS: " << Start_KS << " была связана  " << Finish_KS << "с трубой id: " << id_Truba << endl;
 	is_change = true;
 }
 
@@ -63,7 +63,7 @@ void Gts::Delete_intp(int id, unordered_map<int , Class_Truba>& Map_Truba)
 
 	for (auto i = Map_Truba.begin(); i != Map_Truba.end(); i++) {
 		if (i->second.getStart() == id || i->second.getFinish() == id) {
-			/*	delete_vertices(iter->first);*/
+																																					/*	delete_vertices(iter->first);*/
 			Map_Truba.erase(i->first);
 			break;
 		}
@@ -73,7 +73,67 @@ void Gts::Delete_intp(int id, unordered_map<int , Class_Truba>& Map_Truba)
 void Gts::Delete_outp(int id)
 {
 	is_change = true;
-	/*Vertices.erase(Vertices.find(id));*/
+																																					/*Vertices.erase(Vertices.find(id));*/
 	outp.erase(id);
 	index_Truba.erase(id);
+}
+
+void Gts::TopologicalSort(int index, vector<int>& color, bool& cycl, vector<int>& Sorted)
+{
+	if (color[index] == 2)
+		return;
+	if (cycl)
+		return;
+	if (color[index] == 1) {
+		cycl = true;
+		return;
+	}
+	color[index] = 1;
+	for (int i = 0; i < intp.size(); i++) {
+		if (Matrix_Smej[index][i] == 1) 
+		{
+			int AdjIntp = i;
+			TopologicalSort(AdjIntp, color, cycl, Sorted);
+			if (cycl)
+				return;
+		}
+
+	}
+	color[index] = 2;
+	Sorted.push_back(Get_indexKS(index));
+}
+
+void Gts::TopSort()
+{
+	vector<int> color;
+	color.resize(intp.size());
+	vector<int> SortedVector;
+	bool cycl = false;
+	for (int i = 0; i < intp.size(); i++) {
+		TopologicalSort(i, color, cycl, SortedVector);
+	}
+	if (cycl) {
+		cout << "Цикл есть" << endl;
+	}
+	else {
+		reverse(SortedVector.begin(), SortedVector.end());
+		cout << " Топологическая сортировка" << endl;
+		for (int i = 0; i < SortedVector.size(); i++) {
+			cout << SortedVector[i] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void Gts::NewIndex()
+{
+	int i = 0;
+	for (auto iter = index_KS.begin(); iter != index_KS.end(); iter++) {
+		iter->second = i;
+		++i;
+	}
+	i = 0;
+	for (auto iter = index_Truba.begin(); iter != index_Truba.end(); iter++) {
+		iter->second = i;
+	}
 }

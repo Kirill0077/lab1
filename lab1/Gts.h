@@ -8,10 +8,9 @@ class Gts
 {
 	unordered_map<int, int> index_Truba;
 	unordered_map<int, int> index_KS;
-	unordered_set<int> intp; //id ðåáåð
-	unordered_set<int> outp; //id âåðøèíû
+	unordered_set<int> intp; 
+	unordered_set<int> outp; 
 	vector<vector<int>> Matrix_Smej;
-	vector<vector<int>> IncMatr;
 	bool is_change;
 
 public:

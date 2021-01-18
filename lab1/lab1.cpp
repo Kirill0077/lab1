@@ -447,10 +447,42 @@ int main()
 			Gts.Connect_outp(Truba, KS);
 			break;
 		}
-	
+		case 13:
+		{
+			while (true) {
+				int id = GetCorrectNumber("Введите ID ", 0, Class_Truba::getMaxID());
+				if (deleted(Truba, id)) {
+					Gts.Delete_outp(id);
+					cout << "Труба удалена" << endl;
+				}
+				else
+					cout << "Удаление не удалось" << endl;
+				if (GetCorrectNumber("Продолжить удаление? 1-Да\0-Нет", 0, 1) == 0)
+					break;
+			}
+			break;
+		
+		}
+		case 14:
+		{
+			while (true) {
+				int id = GetCorrectNumber("ID кс для удаления", 0, Class_KS::getMaxID());
+				if (deleted(KS, id)) {
+					Gts.Delete_intp(id, Truba);
+					cout << "КС успешно удалена" << endl;
+				}
+				else
+					cout << "КС с таким ID не найлена" << endl;
+				if (GetCorrectNumber("Продолжить удаление? 1-Да/0-Нет", 0, 1) == 0)
+					break;
+			}
+			break;
+		}
 		case 15:
 		{
-		
+			Gts.Create_MatrixSmej(Truba, KS);
+			Gts.TopSort();
+			break;
 		}
 		case 16:
 		{
