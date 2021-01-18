@@ -5,11 +5,20 @@ int Gts::Get_indexKS(int id) const
     return index_KS.find(id)->second;
 }
 
+int Gts::Get_IdKS(int index) const
+{
+	for (auto iter = index_KS.begin(); iter != index_KS.end(); iter++) {
+		if (iter->second == index)
+			return iter->first;
+	}
+	return 0;
+}
+
 void Gts::Add_KS(const unordered_map<int, Class_KS>& map, int id)
 {
     
-	outp.insert(map.find(id)->first);
-	index_KS.insert({ id, outp.size() - 1 });
+	intp.insert(map.find(id)->first);
+	index_KS.insert({ id, intp.size() - 1 });
 	cout << "KS добавила ID: " << index_KS.find(id)->first << " Index: " << index_KS.find(id)->second << endl;
 	is_change = true;
 
@@ -17,8 +26,8 @@ void Gts::Add_KS(const unordered_map<int, Class_KS>& map, int id)
 
 void Gts::Add_Truba(const unordered_map<int, Class_Truba>& map, int id)
 {
-	intp.insert(map.find(id)->first);
-	index_Truba.insert({ id, intp.size() - 1 });
+	outp.insert(map.find(id)->first);
+	index_Truba.insert({ id, outp.size() - 1 });
 	cout << "Truba добавила ID: " << index_Truba.find(id)->first << " Index: " << index_Truba.find(id)->second << endl;
 	is_change = true;
 }
@@ -27,12 +36,12 @@ void Gts::Add_Truba(const unordered_map<int, Class_Truba>& map, int id)
 void Gts::Connect_outp( unordered_map<int, Class_Truba>& Map_Truba, unordered_map<int, Class_KS>& Map_KS)
 {
 	cout << "Введите KS: " << endl;
-	int Start_KS = GetCorrectNumber("Введите начало трубы", 0, Class_KS::getMaxID());
-	int id_Truba = GetCorrectNumber("Введите Id трубы: ", 0, Class_Truba::getMaxID());
-	int Finish_KS = GetCorrectNumber("Введите конец трубы: ", 0, Class_KS::getMaxID());
+	int Start_KS = GetCorrectNumber("Введите начальную КС: ", 0, Class_KS::getMaxID());
+	int id_Truba = GetCorrectNumber("Введите Id трубы, которой хотите соединить: ", 0, Class_Truba::getMaxID());
+	int Finish_KS = GetCorrectNumber("Введите конечную КС: ", 0, Class_KS::getMaxID());
 	Map_Truba.find(id_Truba)->second.setStart(Start_KS);
 	Map_Truba.find(id_Truba)->second.setFinish(Finish_KS);
-	cout << "KS: " << Start_KS << " была связана  " << Finish_KS << "с трубой id: " << id_Truba << endl;
+	cout << "KS: " << Start_KS << " была связана с КС: " << Finish_KS << " с трубой id: " << id_Truba << endl;
 	is_change = true;
 }
 
@@ -100,7 +109,7 @@ void Gts::TopologicalSort(int index, vector<int>& color, bool& cycl, vector<int>
 
 	}
 	color[index] = 2;
-	Sorted.push_back(Get_indexKS(index));
+	Sorted.push_back(Get_IdKS(index));
 }
 
 void Gts::TopSort()
@@ -113,7 +122,7 @@ void Gts::TopSort()
 		TopologicalSort(i, color, cycl, SortedVector);
 	}
 	if (cycl) {
-		cout << "Цикл есть" << endl;
+		cout << "есть цикл" << endl;
 	}
 	else {
 		reverse(SortedVector.begin(), SortedVector.end());

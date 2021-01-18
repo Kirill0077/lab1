@@ -15,6 +15,7 @@ class Gts
 
 public:
 	int Get_indexKS(int) const;
+	int Get_IdKS(int) const;
 	void Add_KS(const unordered_map<int, Class_KS>&, int);
 	void Add_Truba(const unordered_map<int, Class_Truba>&, int);
 	void Connect_outp( unordered_map<int, Class_Truba>&, unordered_map<int, Class_KS>&);

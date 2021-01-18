@@ -137,10 +137,11 @@ int main()
 	unordered_map <int, Class_Truba> Truba;
 	unordered_map <int, Class_KS> KS;
 	vector <int> EditedTrubs;
+	Gts Gts;
 	while (true)
 	{
 		Menu();
-		int i = GetCorrectNumber("Выберите от 0 до 10: ", 0, 10);
+		int i = GetCorrectNumber("Выберите от 0 до 16: ", 0, 16);
 		cout << '\n';
 		switch (i)
 		{
@@ -434,7 +435,7 @@ int main()
 		}
 		case 10:
 		{
-			Gts.Add_Truba(Truba, GetCorrectNumber("Введите ID трубы:", 0, Class_Truba::getMaxID()));
+			Gts.Add_Truba(Truba, GetCorrectNumber("Введите ID трубы: ", 0, Class_Truba::getMaxID()));
 			break;
 		}
 		case 11:
@@ -457,7 +458,7 @@ int main()
 				}
 				else
 					cout << "Удаление не удалось" << endl;
-				if (GetCorrectNumber("Продолжить удаление? 1-Да\0-Нет", 0, 1) == 0)
+				if (GetCorrectNumber("Продолжить удаление? 1-Да, 0-Нет", 0, 1) == 0)
 					break;
 			}
 			break;
@@ -473,7 +474,7 @@ int main()
 				}
 				else
 					cout << "КС с таким ID не найлена" << endl;
-				if (GetCorrectNumber("Продолжить удаление? 1-Да/0-Нет", 0, 1) == 0)
+				if (GetCorrectNumber("Продолжить удаление? 1-Да, 0-Нет", 0, 1) == 0)
 					break;
 			}
 			break;
@@ -495,7 +496,7 @@ int main()
 		}
 		default:
 		{
-			cout << "Ошибка: введите значение 0 до 10" << endl;
+			cout << "Ошибка: введите значение 0 до 16" << endl;
 		}
 		}
 	}
