@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClCompile Include="Class_KS.cpp" />
     <ClCompile Include="Class_Truba.cpp" />
+    <ClCompile Include="Gts.cpp" />
     <ClCompile Include="lab1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class_KS.h" />
     <ClInclude Include="Class_Truba.h" />
+    <ClInclude Include="Gts.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

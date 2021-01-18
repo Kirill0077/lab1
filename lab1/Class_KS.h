@@ -19,6 +19,8 @@ public:
 	int getshops() const;
 	int get_inworks() const;
 	void edit_KS();
+	void stop_KS();
+	void run_KS();
 	friend istream& operator >> (istream& in, Class_KS& s);
 	friend ostream& operator << (ostream& out, const Class_KS& s);
 	friend ifstream& operator >> (ifstream& in, Class_KS& s);

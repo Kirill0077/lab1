@@ -7,6 +7,7 @@
 #include "Class_Truba.h"
 #include "Class_KS.h"
 #include "utils.h"
+#include "Gts.h"
 using namespace std;
 
 
@@ -99,6 +100,11 @@ void EditingTruba(unordered_map<int, Class_Truba>& m)
 	}
 }
 
+template<typename T>
+bool deleted(unordered_map<int, T>& Map, int id) {
+	return Map.erase(id);
+}
+
 void Menu()
 {
 	cout << "+++++++++++++++++++++++++++++++++++++++++++\n"
@@ -111,7 +117,13 @@ void Menu()
 		<< " 7. Пакетное редактирование труб" << "\n"
 		<< " 8. Сохранить в файл" << "\n"
 		<< " 9. Загрузить из файла" << "\n"
-		<< " 10. Чистка консоли" << "\n"
+		<< " 10. Добавление Трубы в ГТС" << "\n"
+		<< " 11. Добавить КС в ГТС" << "\n"
+		<< " 12. Соединение станций" << "\n"
+		<< " 13. Удаление вершин" << "\n"
+		<< " 14. Удаление краёв труб" << "\n"
+		<< " 15. Топологическая сортировка" << "\n"
+		<< " 16. Чистка консоли" << "\n"
 		<< " 0. Выход" << "\n"
 		<< "+++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
@@ -421,6 +433,26 @@ int main()
 			break;
 		}
 		case 10:
+		{
+			Gts.Add_Truba(Truba, GetCorrectNumber("Введите ID трубы:", 0, Class_Truba::getMaxID()));
+			break;
+		}
+		case 11:
+		{
+			Gts.Add_KS(KS, GetCorrectNumber("Введите ID КС: ", 0, Class_KS::getMaxID()));
+			break;
+		}
+		case 12:
+		{
+			Gts.Connect_outp(Truba, KS);
+			break;
+		}
+	
+		case 15:
+		{
+		
+		}
+		case 16:
 		{
 			system("cls");
 			break;

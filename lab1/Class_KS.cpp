@@ -42,6 +42,26 @@ void Class_KS::edit_KS()
 	inwork = GetCorrectNumber("Введите количество рабочих цехов:", 0, shop);
 }
 
+void Class_KS::stop_KS()
+{
+	if (inwork > 0) {
+		inwork--;
+	}
+	else {
+		cout << "Нет рабочих цехов" << endl;
+	}
+}
+
+void Class_KS::run_KS()
+{
+	if (inwork < shop) {
+		inwork++;
+	}
+	else {
+		cout << "Все цеха заняты" << endl;
+	}
+}
+
 istream& operator>>(istream& in, Class_KS& s)
 {
 	cout << "Введите имя КС ";
